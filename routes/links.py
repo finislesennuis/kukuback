@@ -12,3 +12,10 @@ def read_links(db: Session = Depends(get_db)):
 @router.post("/links/", response_model=schemas.YouTubeLink)
 def create_link(link: schemas.YouTubeLinkCreate, db: Session = Depends(get_db)):
     return crud.create_youtube_link(db, link)
+
+@router.get("/sejong-youtube-link")
+def get_sejong_youtube_link():
+    """
+    세종시 공식 유튜브 링크를 반환하는 API
+    """
+    return {"url": "https://www.youtube.com/@sejongcity/featured"}
