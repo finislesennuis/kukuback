@@ -46,3 +46,25 @@ def create_youtube_link(db: Session, link: YouTubeLinkCreate):
 def get_all_youtube_links(db: Session):
     return db.query(YouTubeLink).all()
 
+from models import Place
+import schemas
+
+# 전체 장소 조회
+
+def get_all_places(db: Session):
+    return db.query(Place).all()
+
+# 카테고리별 장소 조회
+
+def get_places_by_category(db: Session, category: str):
+    return db.query(Place).filter(Place.category == category).all()
+
+# 장소 생성
+
+def create_place(db: Session, place: schemas.PlaceCreate):
+    db_place = Place(**place.dict())
+    db.add(db_place)
+    db.commit()
+    db.refresh(db_place)
+    return db_place
+
