@@ -3,16 +3,16 @@ from bs4 import BeautifulSoup
 
 urls = [
     # 관광명소 10선 (10개 모두 반영)
-    {"url": "https://www.sejong.go.kr/shrUrl/R7lm5XtqhBU98H4MRAZ2.do", "category": "관광명소 10선"},  # 세종호수공원
-    {"url": "https://www.sejong.go.kr/shrUrl/ygD8suG5gdkxNNavhLII.do", "category": "관광명소 10선"},  # 국립세종수목원
-    {"url": "https://www.sejong.go.kr/shrUrl/1936KMxA08.do", "category": "관광명소 10선"},  # 세종이응다리
-    {"url": "https://www.sejong.go.kr/shrUrl/sy2RfOxYtF.do", "category": "관광명소 10선"},  # 베어트리파크
-    {"url": "https://www.sejong.go.kr/shrUrl/28fXgyA58G.do", "category": "관광명소 10선"},  # 세종중앙공원
-    {"url": "https://www.sejong.go.kr/shrUrl/721mPnu929.do", "category": "관광명소 10선"},  # 국립세종도서관
-    {"url": "https://www.sejong.go.kr/shrUrl/eA1jG1A841.do", "category": "관광명소 10선"},  # 대통령기록관
-    {"url": "https://www.sejong.go.kr/shrUrl/OE1uHK15j2.do", "category": "관광명소 10선"},  # 정부세종청사 옥상정원
-    {"url": "https://www.sejong.go.kr/shrUrl/6GP1sAS15dEsOwY3bts1.do", "category": "관광명소 10선"},  # 조천 벚꽃길
-    {"url": "https://www.sejong.go.kr/shrUrl/h5fWF1p560.do", "category": "관광명소 10선"},  # 고복자연공원
+    {"url": "https://www.sejong.go.kr/shrUrl/R7lm5XtqhBU98H4MRAZ2.do", "category": "관광명소 10선"},
+    {"url": "https://www.sejong.go.kr/shrUrl/ygD8suG5gdkxNNavhLII.do", "category": "관광명소 10선"},
+    {"url": "https://www.sejong.go.kr/shrUrl/1936KMxA08.do", "category": "관광명소 10선"},
+    {"url": "https://www.sejong.go.kr/shrUrl/sy2RfOxYtF.do", "category": "관광명소 10선"},
+    {"url": "https://www.sejong.go.kr/shrUrl/28fXgyA58G.do", "category": "관광명소 10선"},
+    {"url": "https://www.sejong.go.kr/shrUrl/721mPnu929.do", "category": "관광명소 10선"},
+    {"url": "https://www.sejong.go.kr/shrUrl/eA1jG1A841.do", "category": "관광명소 10선"},
+    {"url": "https://www.sejong.go.kr/shrUrl/OE1uHK15j2.do", "category": "관광명소 10선"},
+    {"url": "https://www.sejong.go.kr/shrUrl/6GP1sAS15dEsOwY3bts1.do", "category": "관광명소 10선"},
+    {"url": "https://www.sejong.go.kr/shrUrl/h5fWF1p560.do", "category": "관광명소 10선"},
     # 한글여행
     {"url": "https://www.sejong.go.kr/shrUrl/24G2VXMi9C.do", "category": "한글여행"},
     # 정원여행
@@ -62,4 +62,4 @@ for item in urls:
         print(f"Error crawling {item['url']}: {e}")
 
 for place in places:
-    print(place) 
+    print(place)
