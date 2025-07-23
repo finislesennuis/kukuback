@@ -32,23 +32,23 @@ urls = [
 def crawl_sejong_place(url, category):
     res = requests.get(url)
     soup = BeautifulSoup(res.text, "html.parser")
-    name = soup.select_one("h2").text.strip() if soup.select_one("h2") else ""
-    address = ""
-    address_tag = soup.find(text="주소")
-    if address_tag:
-        next_tag = address_tag.find_next()
-        if next_tag:
-            address = next_tag.text.strip()
-    description = soup.select_one(".cont_txt").text.strip() if soup.select_one(".cont_txt") else ""
+    # 이름
+    name = soup.select_one("strong.caption-title.h2")
+    name = name.text.strip() if name else ""
+    # 정보 리스트
+    info_list = soup.select("div.caption-inner ul li")
+    address = info_list[0].get_text(strip=True) if len(info_list) > 0 else ""
+    contact = info_list[1].get_text(strip=True) if len(info_list) > 1 else ""
     homepage = ""
-    homepage_tag = soup.find("a", href=True, text="홈페이지")
-    if homepage_tag:
-        homepage = homepage_tag["href"]
+    if len(info_list) > 2:
+        a_tag = info_list[2].find("a")
+        if a_tag:
+            homepage = a_tag["href"]
     return {
         "name": name,
         "category": category,
         "address": address,
-        "description": description,
+        "contact": contact,
         "homepage": homepage,
         "url": url,
     }
