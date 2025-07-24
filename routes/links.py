@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db
 import schemas, crud
+import re
 
 router = APIRouter()
 
@@ -11,6 +12,10 @@ def read_links(db: Session = Depends(get_db)):
 
 @router.post("/links/", response_model=schemas.YouTubeLink)
 def create_link(link: schemas.YouTubeLinkCreate, db: Session = Depends(get_db)):
+    # 유튜브 URL 유효성 검사 (채널, 동영상, shorts 등 다양한 형식 허용)
+    youtube_regex = r"^(https?://)?(www\.)?(youtube\.com|youtu\.be)/.+"
+    if not re.match(youtube_regex, link.url):
+        raise HTTPException(status_code=400, detail="유효한 유튜브 URL이 아닙니다.")
     return crud.create_youtube_link(db, link)
 
 @router.get("/sejong-youtube-link")

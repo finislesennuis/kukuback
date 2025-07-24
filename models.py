@@ -33,3 +33,16 @@ class YouTubeLink(Base):
     url = Column(String, nullable=False)           # 유튜브 URL
     description = Column(Text)                     # 설명 (선택)
     created_at = Column(String)                    # 등록일자 문자열로 (예: 2025-07-22)
+
+class Place(Base):
+    __tablename__ = "places"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    category = Column(String, nullable=False)  # 카테고리(필수)
+    address = Column(String)
+    lat = Column(Float)
+    lng = Column(Float)
+    description = Column(Text)
+    homepage = Column(String)
+    url = Column(String)  # 원본 세종시 홈페이지 URL
