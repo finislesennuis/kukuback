@@ -68,3 +68,27 @@ def create_place(db: Session, place: schemas.PlaceCreate):
     db.refresh(db_place)
     return db_place
 
+from models import Course, CoursePlace
+
+# 코스 전체 조회
+
+def get_all_courses(db: Session):
+    return db.query(Course).all()
+
+# 코스 생성 (장소 포함)
+def create_course(db: Session, course: schemas.CourseCreate):
+    db_course = Course(name=course.name, img=course.img, detail_url=course.detail_url)
+    db.add(db_course)
+    db.commit()
+    db.refresh(db_course)
+    # 코스별 장소 저장
+    for place_name in course.places:
+        db_place = CoursePlace(course_id=db_course.id, place_name=place_name)
+        db.add(db_place)
+    db.commit()
+    return db_course
+
+# 코스별 장소 조회
+def get_places_by_course(db: Session, course_id: int):
+    return db.query(CoursePlace).filter(CoursePlace.course_id == course_id).all()
+

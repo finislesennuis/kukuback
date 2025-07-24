@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import List
 
 class PlaceBase(BaseModel):
     name: str
@@ -66,5 +67,30 @@ class YouTubeLinkCreate(YouTubeLinkBase):
 class YouTubeLink(YouTubeLinkBase):
     id: int
 
+    class Config:
+        orm_mode = True
+
+class CourseBase(BaseModel):
+    name: str
+    img: str | None = None
+    detail_url: str | None = None
+
+class CourseCreate(CourseBase):
+    places: List[str]
+
+class Course(CourseBase):
+    id: int
+    class Config:
+        orm_mode = True
+
+class CoursePlaceBase(BaseModel):
+    course_id: int
+    place_name: str
+
+class CoursePlaceCreate(CoursePlaceBase):
+    pass
+
+class CoursePlace(CoursePlaceBase):
+    id: int
     class Config:
         orm_mode = True

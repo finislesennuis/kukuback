@@ -34,6 +34,21 @@ class YouTubeLink(Base):
     description = Column(Text)                     # 설명 (선택)
     created_at = Column(String)                    # 등록일자 문자열로 (예: 2025-07-22)
 
+class Course(Base):
+    __tablename__ = "courses"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    img = Column(String)
+    detail_url = Column(String)
+
+class CoursePlace(Base):
+    __tablename__ = "course_places"
+
+    id = Column(Integer, primary_key=True, index=True)
+    course_id = Column(Integer)
+    place_name = Column(String, nullable=False)
+
 class Place(Base):
     __tablename__ = "places"
 
