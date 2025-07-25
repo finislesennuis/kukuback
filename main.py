@@ -1,16 +1,14 @@
 from fastapi import FastAPI
-from routes import festivals, hotplaces, links
+from routes import festivals
 
-from models import HotPlace, Festival
-from database import Base, engine
-from models import YouTubeLink  
+from models import Festival
+from database import Base, engine  
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 app.include_router(festivals.router)
-app.include_router(hotplaces.router)
-app.include_router(links.router)
+
 
 @app.get("/")
 def root():
