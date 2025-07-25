@@ -1,5 +1,6 @@
 # 가상환경 및 캐시
 venv/
+venv311/
 __pycache__/
 *.pyc
 
