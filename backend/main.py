@@ -1,0 +1,44 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+import festivals, links, search
+from places import router as places_router
+
+from models import Festival
+from database import Base, engine
+from config import settings
+
+# DB 테이블 생성
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(
+    title=settings.APP_NAME,
+    version=settings.APP_VERSION,
+    description="세종시 축제 및 관광 정보 API"
+)
+
+# CORS 설정 (프론트엔드 연동용)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# 라우터 등록
+app.include_router(festivals.router, prefix="/api", tags=["festivals"])
+app.include_router(links.router, prefix="/api", tags=["links"])
+app.include_router(places_router, prefix="/api", tags=["places"])
+app.include_router(search.router, prefix="/api", tags=["search"])
+
+@app.get("/")
+def root():
+    return {
+        "message": "세모(세종에서 모하지) 백엔드 API",
+        "version": settings.APP_VERSION,
+        "docs": "/docs"
+    }
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
