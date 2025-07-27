@@ -1,5 +1,5 @@
 from fastapi import APIRouter, BackgroundTasks
-from . import s_festival, s_light, f_flower, jcwpeach, course_crawler, s_place
+from backend import s_festival, s_light, f_flower, jcwpeach, course_crawler, s_place
 
 router = APIRouter()
 
