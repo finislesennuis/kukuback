@@ -1,7 +1,8 @@
 fastapi==0.104.1
 uvicorn==0.24.0
 sqlalchemy==2.0.23
-pydantic==1.10.13
+pydantic==1.10.13          # Pydantic 1.x 버전을 유지합니다.
+# pydantic-settings==1.99  # 이 줄은 삭제하거나 #으로 주석 처리합니다.
 python-dotenv==1.0.0
 requests==2.31.0
 beautifulsoup4==4.12.2
