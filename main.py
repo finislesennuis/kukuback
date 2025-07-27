@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import festivals, links, search
 from places import router as places_router
 from crawler_api import router as crawler_router
+from smart_crawler_api import router as smart_crawler_router
 
 from models import Festival
 from database import Base, engine
@@ -32,6 +33,7 @@ app.include_router(links.router, prefix="/api", tags=["links"])
 app.include_router(places_router, prefix="/api", tags=["places"])
 app.include_router(search.router, prefix="/api", tags=["search"])
 app.include_router(crawler_router, prefix="/api", tags=["crawlers"])
+app.include_router(smart_crawler_router, prefix="/api", tags=["smart-crawlers"])
 
 @app.get("/")
 def root():

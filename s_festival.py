@@ -113,13 +113,11 @@ def crawl_sejong_festival():
 def save_to_db(info):
     try:
         db = SessionLocal()
-        exists = db.query(Festival).filter(
-            Festival.name == info["name"],
-            Festival.date == info["date"]
-        ).first()
+        # 이름으로만 중복 체크 (더 유연한 방식)
+        exists = db.query(Festival).filter(Festival.name == info["name"]).first()
 
         if not exists:
-            # id는 자동 생성되도록 제외
+            # 새 데이터 생성
             save_data = {
                 "name": info.get("name", ""),
                 "date": info.get("date", ""),
@@ -137,7 +135,20 @@ def save_to_db(info):
             db.commit()
             print(f"✅ 저장 완료: {info['name']} (ID: {new_festival.id})")
         else:
-            print(f"⚠️ 이미 존재함: {info['name']} (ID: {exists.id})")
+            # 기존 데이터 업데이트 (더 나은 정보가 있으면)
+            updated = False
+            for key, value in info.items():
+                if key != 'id' and hasattr(exists, key) and value:
+                    current_value = getattr(exists, key)
+                    if not current_value or (isinstance(value, str) and len(value) > len(current_value)):
+                        setattr(exists, key, value)
+                        updated = True
+            
+            if updated:
+                db.commit()
+                print(f"🔄 업데이트 완료: {info['name']} (ID: {exists.id})")
+            else:
+                print(f"ℹ️ 기존 데이터가 더 우수함: {info['name']} (ID: {exists.id})")
         db.close()
         return True
     except Exception as e:
