@@ -10,9 +10,23 @@ from utils import haversine  # ✅ 새로 추가한 유틸 함수
 router = APIRouter()
 
 # ✅ 기존 기능: 전체 조회
-@router.get("/festivals/", response_model=list[schemas.Festival])
+@router.get("/festivals/")
 def read_festivals(db: Session = Depends(get_db)):
-    return crud.get_all_festivals(db)
+    try:
+        festivals = crud.get_all_festivals(db)
+        result = []
+        for f in festivals:
+            result.append({
+                "id": f.id,
+                "name": f.name,
+                "date": f.date,
+                "time": f.time,
+                "location": f.location,
+                "description": f.description
+            })
+        return result
+    except Exception as e:
+        return {"error": str(e)}
 
 # ✅ 기존 기능: 축제 등록
 @router.post("/festivals/", response_model=schemas.Festival)

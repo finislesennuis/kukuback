@@ -8,10 +8,6 @@ import time
 
 from database import SessionLocal
 from models import Festival
-from models import Base
-from database import engine
-
-Base.metadata.create_all(bind=engine)
 
 def crawl_sejong_light_festival():
     options = Options()

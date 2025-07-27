@@ -11,14 +11,14 @@ class Festival(Base):
     date = Column(String)
     time = Column(String)
     location = Column(String)
-    description = Column(Text)
-    contact = Column(String)
-    image_url = Column(String)
-    programs = Column(Text)
-    schedule = Column(String)        
-    url = Column(String)
-    lat = Column(Float)  # 위도
-    lng = Column(Float)  # 경도
+    description = Column(Text)  # 실제 DB 테이블 구조에 맞게 수정
+    contact = Column(String, nullable=True)
+    image_url = Column(String, nullable=True)
+    programs = Column(Text, nullable=True)
+    schedule = Column(String, nullable=True)        
+    url = Column(String, nullable=True)
+    lat = Column(Float, nullable=True)  # 위도
+    lng = Column(Float, nullable=True)  # 경도
 
 class YouTubeLink(Base):
     __tablename__ = "youtube_links"

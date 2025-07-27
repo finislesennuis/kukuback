@@ -1,17 +1,34 @@
-
 import requests
+import json
 
-# ngrok이 만들어준 주소를 여기에 붙여넣으세요!
-ngrok_url = "https://26d5dbdbff2b.ngrok-free.app/crawl"
+# ngrok URL
+NGROK_URL = "https://60722f2d718d.ngrok-free.app"
 
-# 크롤링할 실제 URL
-data = {
-    "url": "http://sjfestival.kr/"
-}
+def test_local_crawler():
+    """로컬 크롤러 테스트"""
+    
+    # 1. 상태 확인
+    print("=== 로컬 크롤러 상태 확인 ===")
+    try:
+        response = requests.get(f"{NGROK_URL}/")
+        print(f"상태: {response.status_code}")
+        print(f"응답: {response.json()}")
+    except Exception as e:
+        print(f"연결 실패: {e}")
+        return
+    
+    # 2. 축제 크롤링 테스트
+    print("\n=== 축제 크롤링 테스트 ===")
+    try:
+        payload = {
+            "type": "festival",
+            "url": "https://sjfestival.kr"
+        }
+        response = requests.post(f"{NGROK_URL}/crawl", json=payload)
+        print(f"상태: {response.status_code}")
+        print(f"응답: {response.json()}")
+    except Exception as e:
+        print(f"크롤링 실패: {e}")
 
-# POST 요청 보내기
-response = requests.post(ngrok_url, json=data)
-
-# 결과 출력
-print("응답 코드:", response.status_code)
-print("응답 내용:", response.json())
+if __name__ == "__main__":
+    test_local_crawler() 

@@ -44,3 +44,32 @@ def root():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+@app.get("/debug/db")
+def debug_db():
+    """DB 연결 및 데이터 조회 디버깅"""
+    try:
+        from database import SessionLocal
+        from models import Festival
+        
+        db = SessionLocal()
+        festivals = db.query(Festival).all()
+        db.close()
+        
+        return {
+            "status": "success",
+            "festival_count": len(festivals),
+            "festivals": [
+                {
+                    "id": f.id,
+                    "name": f.name,
+                    "date": f.date,
+                    "description": f.description
+                } for f in festivals
+            ]
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e)
+        }

@@ -14,11 +14,6 @@ from selenium.webdriver.common.by import By
 
 from database import SessionLocal
 from models import Course, CoursePlace, Place
-from models import Base
-from database import engine
-
-# DB 테이블 생성
-Base.metadata.create_all(bind=engine)
 
 # 카카오 REST API 키 (주소를 좌표로 변환하기 위해 필요)
 KAKAO_API_KEY = "a5cc7b65ae5d251113eff578a56cd8f1"

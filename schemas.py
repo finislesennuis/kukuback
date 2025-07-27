@@ -24,11 +24,11 @@ class FestivalBase(BaseModel):
     date: str
     time: str
     location: str
-    description: str
-    contact: str
-    image_url: str
-    programs: str
-    url: str
+    description: str | None = None  # 실제 DB 테이블 구조에 맞게 수정
+    contact: str | None = None
+    image_url: str | None = None
+    programs: str | None = None
+    url: str | None = None
     lat: float | None = None
     lng: float | None = None
 

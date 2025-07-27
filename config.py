@@ -34,6 +34,9 @@ class Settings(BaseSettings):
     APP_NAME: str = "세모(세종에서 모하지)"
     APP_VERSION: str = "1.0.0"
     
+    # 로컬 크롤러 설정
+    LOCAL_CRAWLER_URL: str = "https://60722f2d718d.ngrok-free.app"  # 새로운 ngrok URL로 변경 필요
+    
     class Config:
         # Pydantic 1.x BaseSettings의 Config
         # env_file 설정은 load_dotenv()가 이미 처리했으므로 필수는 아니지만,

@@ -111,31 +111,42 @@ def crawl_sejong_festival():
     return info
 
 def save_to_db(info):
-    db = SessionLocal()
-    exists = db.query(Festival).filter(
-        Festival.name == info["name"],
-        Festival.date == info["date"]
-    ).first()
+    try:
+        db = SessionLocal()
+        exists = db.query(Festival).filter(
+            Festival.name == info["name"],
+            Festival.date == info["date"]
+        ).first()
 
-    if not exists:
-        new_festival = Festival(
-            name=info.get("name", ""),
-            date=info.get("date", ""),
-            time=info.get("time", ""),
-            location=info.get("location", ""),
-            description=info.get("description", ""),
-            contact=info.get("contact", ""),
-            image_url=info.get("image_url", ""),
-            programs=info.get("programs", ""),
-            schedule=info.get("schedule", ""),
-            url=info.get("url", "")
-        )
-        db.add(new_festival)
-        db.commit()
-        print(f"✅ 저장 완료: {info['name']}")
-    else:
-        print(f"⚠️ 이미 존재함: {info['name']}")
-    db.close()
+        if not exists:
+            # id는 자동 생성되도록 제외
+            save_data = {
+                "name": info.get("name", ""),
+                "date": info.get("date", ""),
+                "time": info.get("time", ""),
+                "location": info.get("location", ""),
+                "description": info.get("description", ""),
+                "contact": info.get("contact", ""),
+                "image_url": info.get("image_url", ""),
+                "programs": info.get("programs", ""),
+                "schedule": info.get("schedule", ""),
+                "url": info.get("url", "")
+            }
+            new_festival = Festival(**save_data)
+            db.add(new_festival)
+            db.commit()
+            print(f"✅ 저장 완료: {info['name']} (ID: {new_festival.id})")
+        else:
+            print(f"⚠️ 이미 존재함: {info['name']} (ID: {exists.id})")
+        db.close()
+        return True
+    except Exception as e:
+        print(f"❌ DB 저장 실패: {info['name']} - {e}")
+        import traceback
+        print(f"❌ 상세 오류: {traceback.format_exc()}")
+        if 'db' in locals():
+            db.close()
+        return False
 
 # ✅ 실행
 if __name__ == "__main__":
